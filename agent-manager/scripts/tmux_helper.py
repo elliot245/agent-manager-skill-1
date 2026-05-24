@@ -754,9 +754,9 @@ def _is_codex_loading_output(output: str) -> bool:
 
 
 def _codex_recent_output(output: str, *, max_lines: int = 20) -> str:
-    lines = str(output or '').splitlines()
+    lines = str(output or '').rstrip().splitlines()
     if len(lines) <= max_lines:
-        return str(output or '')
+        return str(output or '').rstrip()
     return '\n'.join(lines[-max_lines:])
 
 
