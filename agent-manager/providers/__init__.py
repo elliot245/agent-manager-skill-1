@@ -344,7 +344,7 @@ PROVIDERS: Dict[str, Dict] = {
         },
         'session_restore': {
             'mode': 'cli_optional_arg',
-            'flag': '--resume',
+            'flag': '--continue',
         },
         'runtime': {
             'busy_patterns': [
