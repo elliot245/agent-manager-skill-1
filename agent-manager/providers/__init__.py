@@ -328,6 +328,47 @@ PROVIDERS: Dict[str, Dict] = {
             ],
         },
     },
+    'antigravity-cli': {
+        'name': 'Antigravity CLI',
+        'prompt_patterns': ['❯', '›', '>', 'antigravity-cli>', 'You>'],
+        'startup_wait': 1,
+        'description': 'Antigravity CLI agent',
+        'system_prompt': {
+            'mode': 'tmux_paste',
+        },
+        'mcp_config': {
+            'mode': 'unsupported',
+        },
+        'session_restore': {
+            'mode': 'cli_optional_arg',
+            'flag': '--resume',
+        },
+        'runtime': {
+            'busy_patterns': [
+                'Thinking...',
+                'Thinking…',
+                'Working...',
+                'Working…',
+                'Performing...',
+                'Analyzing...',
+                'Executing...',
+                'Spelunking...',
+                '⏳ Thinking',
+                '(esc to interrupt',
+            ],
+            'blocked_patterns': [
+                'actions require approval',
+                'requires approval',
+                'waiting for approval',
+                'Allow this action',
+            ],
+            'stuck_after_seconds': 180,
+            'context_left_patterns': [
+                r'(\d{1,3})%\s*context left',
+                r'context (?:window|budget)[: ]+(\d{1,3})%',
+            ],
+        },
+    },
 }
 
 
@@ -335,6 +376,8 @@ def get_provider_key(launcher: str) -> str:
     """Get provider key based on launcher path/name."""
     launcher_lower = (launcher or "").lower()
 
+    if 'antigravity' in launcher_lower:
+        return 'antigravity-cli'
     if 'gemini' in launcher_lower:
         return 'gemini'
     if 'codex' in launcher_lower:
