@@ -702,7 +702,7 @@ def cmd_send(args, *, deps: Any):
         return 1
 
     launcher = resolve_launcher_command(agent_config.get('launcher', ''))
-    is_codex = 'codex' in launcher.lower()
+    is_codex = 'codex' in launcher.lower() or 'antigravity' in launcher.lower()
     runtime_snapshot = _probe_runtime_state(deps, agent_id=agent_id, launcher=launcher)
     if runtime_snapshot is not None:
         runtime_state, runtime_reason = runtime_snapshot
@@ -880,7 +880,7 @@ def cmd_assign(args, *, deps: Any, start_handler: Optional[Callable] = None):
         time.sleep(3)
 
     launcher = resolve_launcher_command(agent_config.get('launcher', ''))
-    is_codex = 'codex' in launcher.lower()
+    is_codex = 'codex' in launcher.lower() or 'antigravity' in launcher.lower()
     runtime_snapshot = _probe_runtime_state(deps, agent_id=agent_id, launcher=launcher)
     if runtime_snapshot is not None:
         runtime_state, runtime_reason = runtime_snapshot

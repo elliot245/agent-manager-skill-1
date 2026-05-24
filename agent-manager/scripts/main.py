@@ -1861,7 +1861,7 @@ def _run_fixed_dream_heartbeat(
         launcher=launcher,
         dream_message=dream_message,
         timeout_seconds=timeout_seconds,
-        is_codex='codex' in launcher.lower(),
+        is_codex='codex' in launcher.lower() or 'antigravity' in launcher.lower(),
         dream_id=dream_id,
     )
 
@@ -2222,7 +2222,7 @@ def _maybe_rollover_heartbeat_session(
     reason = 'fresh session_mode' if session_mode == 'fresh' else f'context<{_HEARTBEAT_AUTO_CONTEXT_THRESHOLD}%'
     print(f"♻️  Heartbeat session rollover triggered ({reason})")
 
-    is_codex = 'codex' in (launcher or '').lower()
+    is_codex = 'codex' in (launcher or '').lower() or 'antigravity' in (launcher or '').lower()
     repo_root = get_repo_root()
     handoff_file = _write_heartbeat_handoff_template(repo_root, agent_id, heartbeat_id)
     handoff_prompt = _build_heartbeat_handoff_prompt(handoff_file, heartbeat_id)
@@ -2597,7 +2597,7 @@ def cmd_dream_run(args):
         launcher=launcher,
         dream_message=dream_message,
         timeout_seconds=timeout_seconds,
-        is_codex='codex' in launcher.lower(),
+        is_codex='codex' in launcher.lower() or 'antigravity' in launcher.lower(),
         dream_id=dream_id,
     )
 
@@ -2756,7 +2756,7 @@ def cmd_heartbeat_run(args):
 
     repo_root = get_repo_root()
     launcher = resolve_launcher_command(agent_config.get('launcher', ''))
-    is_codex = 'codex' in launcher.lower()
+    is_codex = 'codex' in launcher.lower() or 'antigravity' in launcher.lower()
     context_left_percent = _detect_agent_context_left_percent(agent_id, launcher=launcher)
 
     session_mode_raw = heartbeat.get('session_mode', 'restore')

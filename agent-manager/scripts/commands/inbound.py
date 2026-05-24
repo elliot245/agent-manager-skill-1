@@ -138,7 +138,7 @@ def drain_main_inbound_once(
         return {'rc': 1, 'drained': 0, 'skipped': len(pending), 'failed': 0, 'dead_lettered': 0}
 
     launcher = deps.resolve_launcher_command(agent_config.get('launcher', ''))
-    is_codex = 'codex' in launcher.lower()
+    is_codex = 'codex' in launcher.lower() or 'antigravity' in launcher.lower()
     claim_owner = f"inbound-drain:{trigger}"
     now = _utc_now()
     summary = {'rc': 0, 'drained': 0, 'skipped': 0, 'failed': 0, 'dead_lettered': 0}

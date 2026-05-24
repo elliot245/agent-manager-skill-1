@@ -944,7 +944,7 @@ def wait_for_agent_ready(agent_id: str, launcher: str, timeout: int = 45) -> boo
     # Detect provider for special handling
     launcher_lower = launcher.lower()
     is_droid = 'droid' in launcher_lower
-    is_codex = 'codex' in launcher_lower
+    is_codex = 'codex' in launcher_lower or 'antigravity' in launcher_lower
 
     # Give agent time to process the prompt
     time.sleep(min_wait)
@@ -1161,11 +1161,11 @@ def get_agent_runtime_state(agent_id: str, launcher: str = "") -> Dict[str, obje
         )
 
     output = result.stdout
-    if launcher and 'codex' in launcher.lower():
+    if launcher and ('codex' in launcher.lower() or 'antigravity' in launcher.lower()):
         output = _codex_recent_output(output)
     elapsed_seconds = _parse_elapsed_seconds(output)
 
-    if launcher and 'codex' in launcher.lower() and _is_codex_model_choice_prompt(output):
+    if launcher and ('codex' in launcher.lower() or 'antigravity' in launcher.lower()) and _is_codex_model_choice_prompt(output):
         now = time.time()
         last_failure = _CODEX_MODEL_PROMPT_LAST_FAILURE.get(agent_id)
         if last_failure is not None and (now - last_failure) < _CODEX_MODEL_PROMPT_FAILURE_THROTTLE_S:
@@ -1263,7 +1263,7 @@ def wait_for_prompt(agent_id: str, launcher: str, timeout: int = 30) -> bool:
     # Detect provider for special handling
     launcher_lower = launcher.lower()
     is_droid = 'droid' in launcher_lower
-    is_codex = 'codex' in launcher_lower
+    is_codex = 'codex' in launcher_lower or 'antigravity' in launcher_lower
 
     # Initial wait for CLI to start
     time.sleep(startup_wait)
