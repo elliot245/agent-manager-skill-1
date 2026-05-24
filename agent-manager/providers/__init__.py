@@ -336,6 +336,9 @@ PROVIDERS: Dict[str, Dict] = {
         'system_prompt': {
             'mode': 'tmux_paste',
         },
+        'agents_md': {
+            'mode': 'cwd',
+        },
         'mcp_config': {
             'mode': 'unsupported',
         },
